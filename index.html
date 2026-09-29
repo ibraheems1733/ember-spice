@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Ember Spice | Order Online</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <header class="navbar">
+        <a href="#home" class="logo">
+            EMBER <span>SPICE</span>
+        </a>
+
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#menu">Menu</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+        </nav>
+
+        <button id="openCart" class="cart-button">
+            🛒 Cart <span id="cartCount">0</span>
+        </button>
+    </header>
+
+
+    <!-- HERO -->
+    <section id="home" class="hero">
+
+        <div class="hero-content">
+
+            <p class="eyebrow">FRESH • HOT • MADE TO ORDER</p>
+
+            <h1>
+                Food worth<br>
+                <span>coming back for.</span>
+            </h1>
+
+            <p>
+                Big flavors, fresh ingredients and comfort food
+                made fresh for every order.
+            </p>
+
+            <div class="hero-buttons">
+                <a href="#menu" class="btn primary">View Menu</a>
+                <a href="#about" class="btn secondary">Our Story</a>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- MENU -->
+    <section id="menu" class="section">
+
+        <div class="section-heading">
+            <p class="eyebrow">OUR MENU</p>
+            <h2>Pick your favorite.</h2>
+        </div>
+
+        <div id="menuGrid" class="menu-grid"></div>
+
+    </section>
+
+
+    <!-- ABOUT -->
+    <section id="about" class="about">
+
+        <div class="about-content">
+
+            <p class="eyebrow">WHY EMBER SPICE</p>
+
+            <h2>
+                Simple ingredients.
+                <span>Big flavor.</span>
+            </h2>
+
+            <p>
+                We believe great food doesn't need to be complicated.
+                Fresh ingredients, bold flavors and food made with care.
+            </p>
+
+            <a href="#menu" class="btn primary">
+                Order Something Good
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- CONTACT -->
+    <section id="contact" class="section contact">
+
+        <div class="section-heading">
+            <p class="eyebrow">COME VISIT</p>
+            <h2>Come hungry.</h2>
+        </div>
+
+        <div class="contact-grid">
+
+            <div>
+                <h3>📍 Location</h3>
+                <p>Bhopal, Madhya Pradesh</p>
+            </div>
+
+            <div>
+                <h3>📞 Phone</h3>
+                <p>+91 98765 43210</p>
+            </div>
+
+            <div>
+                <h3>🕐 Hours</h3>
+                <p>11 AM – 11 PM</p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
+    <footer>
+        <p>© 2026 Ember Spice</p>
+    </footer>
+
+
+    <!-- CART DRAWER -->
+    <div id="overlay" class="overlay"></div>
+
+    <aside id="cartDrawer" class="cart-drawer">
+
+        <div class="drawer-header">
+            <h2>Your Cart</h2>
+
+            <button id="closeCart" class="close-btn">
+                ×
+            </button>
+        </div>
+
+        <div id="cartItems" class="cart-items"></div>
+
+        <div class="cart-bottom">
+
+            <div class="total-row">
+                <span>Total</span>
+                <strong id="cartTotal">₹0</strong>
+            </div>
+
+            <button id="checkoutButton" class="btn primary full">
+                Checkout
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- CHECKOUT -->
+    <div id="checkoutModal" class="modal">
+
+        <div class="modal-box">
+
+            <button id="closeCheckout" class="close-btn">
+                ×
+            </button>
+
+            <p class="eyebrow">CHECKOUT</p>
+
+            <h2>Place your order.</h2>
+
+            <form id="checkoutForm">
+
+                <label>Name</label>
+                <input
+                    id="customerName"
+                    type="text"
+                    placeholder="Your name"
+                    required
+                >
+
+                <label>Phone</label>
+                <input
+                    id="customerPhone"
+                    type="tel"
+                    placeholder="Your phone number"
+                    required
+                >
+
+                <label>Delivery address</label>
+                <textarea
+                    id="customerAddress"
+                    placeholder="Full delivery address"
+                    required
+                ></textarea>
+
+                <div class="checkout-total">
+                    <span>Total</span>
+                    <strong id="checkoutTotal">₹0</strong>
+                </div>
+
+                <button class="btn primary full" type="submit">
+                    Place Order
+                </button>
+
+                <p id="checkoutStatus" class="status"></p>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- SUCCESS -->
+    <div id="successModal" class="modal">
+
+        <div class="modal-box success">
+
+            <div class="success-icon">
+                ✓
+            </div>
+
+            <p class="eyebrow">ORDER RECEIVED</p>
+
+            <h2>Order placed!</h2>
+
+            <p>
+                Your order has been sent to Ember Spice.
+            </p>
+
+            <p class="order-id">
+                Order ID:
+                <strong id="orderId"></strong>
+            </p>
+
+            <button id="closeSuccess" class="btn primary">
+                Done
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- CHATBOT -->
+    <button id="chatButton" class="chat-button">
+        🤖
+    </button>
+
+    <div id="chatWindow" class="chat-window">
+
+        <div class="chat-header">
+
+            <div>
+                <strong>Ember Assistant</strong>
+                <small>Restaurant help</small>
+            </div>
+
+            <button id="closeChat" class="close-btn">
+                ×
+            </button>
+
+        </div>
+
+        <div id="chatMessages" class="chat-messages">
+
+            <div class="chat bot">
+                Hey 👋 Ask me about the menu, prices, timings or ordering.
+            </div>
+
+        </div>
+
+        <form id="chatForm" class="chat-form">
+
+            <input
+                id="chatInput"
+                placeholder="Ask something..."
+                autocomplete="off"
+            >
+
+            <button type="submit">
+                Send
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- OWNER DASHBOARD -->
+    <section id="adminSection" class="admin-section">
+
+        <div class="admin-box">
+
+            <div class="admin-heading">
+                <div>
+                    <p class="eyebrow">OWNER AREA</p>
+                    <h2>Orders</h2>
+                </div>
+
+                <button id="logoutButton" class="btn secondary hidden">
+                    Logout
+                </button>
+            </div>
+
+
+            <!-- LOGIN -->
+
+            <form id="loginForm" class="login-form">
+
+                <input
+                    id="loginEmail"
+                    type="email"
+                    placeholder="Owner email"
+                    required
+                >
+
+                <input
+                    id="loginPassword"
+                    type="password"
+                    placeholder="Password"
+                    required
+                >
+
+                <button class="btn primary" type="submit">
+                    Login
+                </button>
+
+                <p id="loginStatus" class="status"></p>
+
+            </form>
+
+
+            <!-- DASHBOARD -->
+
+            <div id="dashboard" class="hidden">
+
+                <div class="dashboard-bar">
+
+                    <strong id="orderCount">
+                        0 orders
+                    </strong>
+
+                    <button
+                        id="refreshOrders"
+                        class="btn secondary"
+                    >
+                        Refresh
+                    </button>
+
+                </div>
+
+                <div id="ordersList" class="orders-list"></div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
